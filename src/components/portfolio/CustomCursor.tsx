@@ -106,6 +106,8 @@ export function CustomCursor() {
       default:
         return "";
     }
+  };
+
   return (
     <>
       {/* Main cursor dot */}
