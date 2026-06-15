@@ -39,9 +39,7 @@ export function MomentsLedger() {
             <ul className="space-y-8">
               {moments.map((m) => (
                 <li key={m.title} className="border-t border-white/10 pt-6">
-                  <p className="font-display text-xl font-semibold tracking-tight">
-                    {m.title}
-                  </p>
+                  <p className="font-display text-xl font-semibold tracking-tight">{m.title}</p>
                   <p className="text-foreground/75 mt-2 leading-relaxed">{m.body}</p>
                 </li>
               ))}

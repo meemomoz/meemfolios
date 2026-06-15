@@ -49,10 +49,7 @@ export function FAQSection() {
           {faqs.map((faq, i) => {
             const isOpen = openIndex === i;
             return (
-              <div
-                key={i}
-                className="paper-card grain overflow-hidden transition-all duration-500"
-              >
+              <div key={i} className="paper-card grain overflow-hidden transition-all duration-500">
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : i)}
                   className="flex w-full items-center justify-between gap-6 px-6 py-5 text-left sm:px-8 sm:py-6"
@@ -78,9 +75,7 @@ export function FAQSection() {
                 >
                   <div className="overflow-hidden">
                     <div className="border-t border-white/8 px-6 pb-6 pt-4 sm:px-8 sm:pb-8 sm:pt-5">
-                      <p className="text-foreground/80 max-w-2xl leading-relaxed">
-                        {faq.answer}
-                      </p>
+                      <p className="text-foreground/80 max-w-2xl leading-relaxed">{faq.answer}</p>
                     </div>
                   </div>
                 </div>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { setVortexAccent } from "./VortexCanvas";
+import { setVortexAccent } from "./vortexAccent";
 import { ScrollReveal } from "./ScrollReveal";
 import miskavedaLogo from "@/assets/miskaveda.png.asset.json";
 import skilledSapiensLogo from "@/assets/skilled-sapiens.png.asset.json";
@@ -123,8 +123,7 @@ const chapters: Chapter[] = [
     logo: skilledSapiensLogo.url,
     logoBg: "#ffd23f",
     tags: ["EdTech", "Outreach", "Growth"],
-    summary:
-      "Positioning an upskilling platform for learners who've heard every promise before.",
+    summary: "Positioning an upskilling platform for learners who've heard every promise before.",
     challenge:
       "EdTech is a noisy category — every player promises transformation. The real challenge was earning attention from learners who'd been burned by hype and parents who wanted proof, not pitch decks.",
     shift:
@@ -158,7 +157,6 @@ export function ExperienceScroller() {
     <section id="work" className="relative grid-bg px-6 py-32">
       <div className="absolute inset-0 halftone opacity-30 pointer-events-none" />
       <div className="mx-auto max-w-7xl relative z-10">
-        
         <header className="mb-20 grid gap-6 sm:grid-cols-[auto_1fr] sm:items-end">
           <p className="font-mono-ui text-muted-foreground text-[11px] uppercase tracking-[0.35em]">
             01 — The Work
@@ -172,11 +170,7 @@ export function ExperienceScroller() {
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {chapters.map((c, i) => (
             <ScrollReveal key={c.id} animation="skew-up" cascadeIndex={i}>
-              <ExperienceCard
-                chapter={c}
-                index={i}
-                onClick={() => setOpen(c)}
-              />
+              <ExperienceCard chapter={c} index={i} onClick={() => setOpen(c)} />
             </ScrollReveal>
           ))}
         </div>
@@ -223,15 +217,25 @@ export function ExperienceScroller() {
                   style={{ background: open.logoBg, border: `1px solid ${open.accent}33` }}
                 >
                   {open.logo ? (
-                    <img src={open.logo} alt={open.org} className="max-h-[60%] max-w-[70%] object-contain" />
+                    <img
+                      src={open.logo}
+                      alt={open.org}
+                      className="max-h-[60%] max-w-[70%] object-contain"
+                    />
                   ) : (
-                    <span className="font-display text-4xl font-black" style={{ color: open.accent }}>
+                    <span
+                      className="font-display text-4xl font-black"
+                      style={{ color: open.accent }}
+                    >
                       {open.org[0]}
                     </span>
                   )}
                 </div>
 
-                <p className="font-mono-ui text-[11px] uppercase tracking-[0.3em]" style={{ color: open.accent }}>
+                <p
+                  className="font-mono-ui text-[11px] uppercase tracking-[0.3em]"
+                  style={{ color: open.accent }}
+                >
                   {open.role}
                 </p>
                 <h3 className="font-display text-4xl sm:text-6xl font-extrabold tracking-tight mt-4 leading-[0.95]">
@@ -269,7 +273,9 @@ export function ExperienceScroller() {
 
             <div className="flex justify-between items-center text-[10px] font-mono-ui text-muted-foreground/60 border-t border-white/10 pt-6">
               <span>UN-RESUME SYSTEM PROTOCOL v4.2</span>
-              <span className="text-right">ACCENT ENCODING: <span style={{ color: open.accent }}>{open.accent}</span></span>
+              <span className="text-right">
+                ACCENT ENCODING: <span style={{ color: open.accent }}>{open.accent}</span>
+              </span>
             </div>
           </div>
         </div>
@@ -279,7 +285,15 @@ export function ExperienceScroller() {
 }
 
 // Experience Card component for 3D tilt tracking
-function ExperienceCard({ chapter, index, onClick }: { chapter: Chapter; index: number; onClick: () => void }) {
+function ExperienceCard({
+  chapter,
+  index,
+  onClick,
+}: {
+  chapter: Chapter;
+  index: number;
+  onClick: () => void;
+}) {
   const cardRef = useRef<HTMLButtonElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [glow, setGlow] = useState({ x: 0, y: 0 });
@@ -293,8 +307,8 @@ function ExperienceCard({ chapter, index, onClick }: { chapter: Chapter; index: 
     const y = e.clientY - rect.top;
 
     // Normalize coordinates (-0.5 to 0.5)
-    const normX = (x / rect.width) - 0.5;
-    const normY = (y / rect.height) - 0.5;
+    const normX = x / rect.width - 0.5;
+    const normY = y / rect.height - 0.5;
 
     setTilt({
       x: -normY * 12, // Max rotation 12deg X
@@ -358,16 +372,17 @@ function ExperienceCard({ chapter, index, onClick }: { chapter: Chapter; index: 
             className="font-display text-4xl font-extrabold tracking-tighter"
             style={{ color: chapter.accent }}
           >
-            {chapter.org.split(" ").map((w) => w[0]).join("")}
+            {chapter.org
+              .split(" ")
+              .map((w) => w[0])
+              .join("")}
           </span>
         )}
 
         {/* Diagonal halftone strip element */}
         <div className="absolute right-0 top-0 w-24 h-24 bg-white/5 halftone rotate-45 translate-x-12 -translate-y-12 pointer-events-none" />
 
-        <span
-          className="font-mono-ui absolute left-3 top-3 rounded-md bg-black/5 border border-black/10 px-2 py-1 text-[9px] uppercase tracking-[0.3em] text-foreground backdrop-blur"
-        >
+        <span className="font-mono-ui absolute left-3 top-3 rounded-md bg-black/5 border border-black/10 px-2 py-1 text-[9px] uppercase tracking-[0.3em] text-foreground backdrop-blur">
           PROJECT 0{index + 1}
         </span>
       </div>
@@ -395,9 +410,7 @@ function ExperienceCard({ chapter, index, onClick }: { chapter: Chapter; index: 
           <h3 className="font-display mt-2 text-2xl font-bold leading-tight tracking-tight text-foreground group-hover:ink-hover">
             {chapter.org}
           </h3>
-          <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
-            {chapter.summary}
-          </p>
+          <p className="text-muted-foreground mt-3 text-sm leading-relaxed">{chapter.summary}</p>
         </div>
 
         <div className="mt-auto flex items-center justify-between border-t border-white/10 pt-4">
@@ -420,7 +433,10 @@ function Block({ label, body, accent }: { label: string; body: string; accent: s
   return (
     <div className="border-l border-white/10 pl-6 relative">
       {/* Decorative technical node dot */}
-      <div className="absolute -left-[4.5px] top-1.5 w-2 h-2 rounded-full border" style={{ backgroundColor: accent, borderColor: "#050814", boxShadow: `0 0 10px ${accent}` }} />
+      <div
+        className="absolute -left-[4.5px] top-1.5 w-2 h-2 rounded-full border"
+        style={{ backgroundColor: accent, borderColor: "#050814", boxShadow: `0 0 10px ${accent}` }}
+      />
       <p
         className="font-mono-ui mb-3 text-[9px] uppercase tracking-[0.35em]"
         style={{ color: accent }}

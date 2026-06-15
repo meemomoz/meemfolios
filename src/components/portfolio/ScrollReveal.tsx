@@ -37,7 +37,7 @@ export function ScrollReveal({
       {
         threshold,
         rootMargin: "0px 0px -50px 0px", // triggers slightly before entering
-      }
+      },
     );
 
     observer.observe(el);
@@ -132,7 +132,7 @@ export function RevealText({
           observer.unobserve(el);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     observer.observe(el);
@@ -144,8 +144,9 @@ export function RevealText({
   return (
     <span ref={ref} className={`inline-block ${className}`}>
       {words.map((word, wordIdx) => {
-        const isHighlighted = highlightText && word.toLowerCase().includes(highlightText.toLowerCase());
-        
+        const isHighlighted =
+          highlightText && word.toLowerCase().includes(highlightText.toLowerCase());
+
         return (
           <span
             key={wordIdx}

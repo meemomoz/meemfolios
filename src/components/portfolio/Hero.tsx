@@ -2,10 +2,7 @@ import meemaVideo from "@/assets/meema.mp4.asset.json";
 
 export function Hero() {
   return (
-    <section
-      id="top"
-      className="relative flex min-h-screen items-center px-6 pt-32 pb-24"
-    >
+    <section id="top" className="relative flex min-h-screen items-center px-6 pt-32 pb-24">
       <div className="mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[1.4fr_1fr]">
         <div>
           <p className="font-mono-ui mb-8 flex items-center gap-3 text-[11px] uppercase tracking-[0.35em] text-muted-foreground">
@@ -21,9 +18,8 @@ export function Hero() {
           </h1>
           <div className="mt-10 grid gap-8 sm:grid-cols-[1fr_auto] sm:items-end">
             <p className="text-foreground/80 max-w-2xl text-lg leading-relaxed sm:text-xl">
-              Not the resume version. The actual one. The best way to understand
-              someone isn't through bullet points — it's through who they are
-              when nobody is watching.
+              Not the resume version. The actual one. The best way to understand someone isn't
+              through bullet points — it's through who they are when nobody is watching.
             </p>
             <div
               className="font-mono-ui text-muted-foreground hidden items-center gap-2 text-[10px] uppercase tracking-[0.3em] sm:flex"
@@ -37,22 +33,10 @@ export function Hero() {
 
         <div className="relative mx-auto w-full max-w-md lg:max-w-none">
           {/* Frame accents */}
-          <div
-            aria-hidden
-            className="bg-signal/70 absolute -top-3 -left-3 h-10 w-px"
-          />
-          <div
-            aria-hidden
-            className="bg-signal/70 absolute -top-3 -left-3 h-px w-10"
-          />
-          <div
-            aria-hidden
-            className="bg-foreground/30 absolute -right-3 -bottom-3 h-10 w-px"
-          />
-          <div
-            aria-hidden
-            className="bg-foreground/30 absolute -right-3 -bottom-3 h-px w-10"
-          />
+          <div aria-hidden className="bg-signal/70 absolute -top-3 -left-3 h-10 w-px" />
+          <div aria-hidden className="bg-signal/70 absolute -top-3 -left-3 h-px w-10" />
+          <div aria-hidden className="bg-foreground/30 absolute -right-3 -bottom-3 h-10 w-px" />
+          <div aria-hidden className="bg-foreground/30 absolute -right-3 -bottom-3 h-px w-10" />
 
           <div className="paper-card grain relative overflow-hidden rounded-sm">
             <div className="relative aspect-[3/4] w-full">

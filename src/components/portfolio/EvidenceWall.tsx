@@ -28,7 +28,8 @@ const initialCards: Card[] = [
     tilt: -4,
     tint: "#00F0FF",
     linkedin: "https://www.linkedin.com/in/meemansa-malav",
-    testimonial: "Meemansa brings a rare combination of structural thinking and empathy. During our collaboration, she demonstrated outstanding leadership in mapping stakeholder journeys and aligning event pipelines. She has an natural ability to connect, lead, and execute under pressure.",
+    testimonial:
+      "Meemansa brings a rare combination of structural thinking and empathy. During our collaboration, she demonstrated outstanding leadership in mapping stakeholder journeys and aligning event pipelines. She has an natural ability to connect, lead, and execute under pressure.",
   },
   {
     id: "ankita",
@@ -40,7 +41,8 @@ const initialCards: Card[] = [
     tilt: 3,
     tint: "#f5a524",
     linkedin: "https://www.linkedin.com/in/meemansa-malav",
-    testimonial: "A absolute force in brand storytelling and growth marketing. Meemansa has a deep psychology-first approach that transforms cold prospects into loyal community advocates. Her energy is infectious, and her focus on data-backed empathy makes her an invaluable team asset.",
+    testimonial:
+      "A absolute force in brand storytelling and growth marketing. Meemansa has a deep psychology-first approach that transforms cold prospects into loyal community advocates. Her energy is infectious, and her focus on data-backed empathy makes her an invaluable team asset.",
   },
   {
     id: "riya",
@@ -52,13 +54,15 @@ const initialCards: Card[] = [
     tilt: -2,
     tint: "#4fd1c5",
     linkedin: "https://www.linkedin.com/in/meemansa-malav",
-    testimonial: "Working with Meemansa at Times Internet was fantastic. She managed the student and brand outreach for TSAC & Mic Drop Madness with complete ownership. In less than 20 days, she built a thriving community footprint from scratch. Truly a self-starter who makes things happen.",
+    testimonial:
+      "Working with Meemansa at Times Internet was fantastic. She managed the student and brand outreach for TSAC & Mic Drop Madness with complete ownership. In less than 20 days, she built a thriving community footprint from scratch. Truly a self-starter who makes things happen.",
   },
 ];
 
 export function EvidenceWall() {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+  const [containerWidth, setContainerWidth] = useState(1000);
+
   // Drag positions state for each card
   const [offsets, setOffsets] = useState<Record<string, { x: number; y: number }>>({
     anshul: { x: 0, y: 0 },
@@ -87,8 +91,10 @@ export function EvidenceWall() {
   useEffect(() => {
     const updatePin = () => {
       if (containerRef.current) {
+        const w = containerRef.current.offsetWidth;
+        setContainerWidth(w);
         setPinCenter({
-          x: containerRef.current.offsetWidth / 2,
+          x: w / 2,
           y: 40,
         });
       }
@@ -119,7 +125,14 @@ export function EvidenceWall() {
   };
 
   // Draggable node math helper
-  const handleDrag = (id: string, clientX: number, clientY: number, startX: number, startY: number, startOffset: { x: number; y: number }) => {
+  const handleDrag = (
+    id: string,
+    clientX: number,
+    clientY: number,
+    startX: number,
+    startY: number,
+    startOffset: { x: number; y: number },
+  ) => {
     const dx = clientX - startX;
     const dy = clientY - startY;
     setOffsets((prev) => ({
@@ -134,7 +147,7 @@ export function EvidenceWall() {
   return (
     <section id="evidence" className="relative px-6 py-32 overflow-hidden grid-bg">
       <div className="absolute inset-0 halftone opacity-25 pointer-events-none" />
-      
+
       <div className="mx-auto max-w-7xl relative z-10">
         <header className="mb-14 grid gap-6 sm:grid-cols-[auto_1fr] sm:items-end">
           <p className="font-mono-ui text-muted-foreground text-[11px] uppercase tracking-[0.35em]">
@@ -142,7 +155,10 @@ export function EvidenceWall() {
           </p>
           <h2 className="font-display max-w-3xl text-4xl font-semibold leading-[0.95] tracking-tight sm:text-6xl text-white">
             Conspiracy Board.
-            <span className="text-muted-foreground italic"> Grab and drag cards to reorganise.</span>
+            <span className="text-muted-foreground italic">
+              {" "}
+              Grab and drag cards to reorganise.
+            </span>
           </h2>
         </header>
 
@@ -161,7 +177,6 @@ export function EvidenceWall() {
                 // Calculate actual coordinates for lines in real-time
                 const cardWidth = 240;
                 const cardHeight = 280;
-                const containerWidth = containerRef.current?.offsetWidth || 1000;
                 const startLeft = (c.initialX / 100) * containerWidth;
                 const currentX = startLeft + offsets[c.id].x + cardWidth / 2;
                 const currentY = c.initialY + offsets[c.id].y + 30; // yarn attached to top-middle of card
@@ -170,7 +185,7 @@ export function EvidenceWall() {
                   <g key={c.id}>
                     {/* Glowing background path line */}
                     <path
-                      d={`M ${pinCenter.x} ${pinCenter.y} Q ${(pinCenter.x + currentX)/2} ${(pinCenter.y + currentY)/2 - 30}, ${currentX} ${currentY}`}
+                      d={`M ${pinCenter.x} ${pinCenter.y} Q ${(pinCenter.x + currentX) / 2} ${(pinCenter.y + currentY) / 2 - 30}, ${currentX} ${currentY}`}
                       fill="none"
                       stroke={c.tint}
                       strokeWidth="2.5"
@@ -178,13 +193,19 @@ export function EvidenceWall() {
                       className="opacity-20"
                     />
                     <path
-                      d={`M ${pinCenter.x} ${pinCenter.y} Q ${(pinCenter.x + currentX)/2} ${(pinCenter.y + currentY)/2 - 20}, ${currentX} ${currentY}`}
+                      d={`M ${pinCenter.x} ${pinCenter.y} Q ${(pinCenter.x + currentX) / 2} ${(pinCenter.y + currentY) / 2 - 20}, ${currentX} ${currentY}`}
                       fill="none"
                       stroke="rgba(255, 0, 255, 0.6)"
                       strokeWidth="1.5"
                       className="opacity-70"
                     />
-                    <circle cx={currentX} cy={currentY} r="4" fill="#00F0FF" className="animate-pulse shadow-[0_0_10px_#00F0FF]" />
+                    <circle
+                      cx={currentX}
+                      cy={currentY}
+                      r="4"
+                      fill="#00F0FF"
+                      className="animate-pulse shadow-[0_0_10px_#00F0FF]"
+                    />
                   </g>
                 );
               })}
@@ -227,12 +248,14 @@ export function EvidenceWall() {
             })}
 
             <div className="absolute right-8 bottom-8 pointer-events-none opacity-25 font-mono text-[9px] uppercase tracking-[0.25em] text-white/50 text-right">
-              SYSTEM CORRELATION PROTOCOL<br />
+              SYSTEM CORRELATION PROTOCOL
+              <br />
               OUTREACH · BRAND · MEDIA BUILDS
             </div>
-            
+
             <div className="absolute left-8 bottom-8 pointer-events-none opacity-20 border border-dashed border-white/20 p-3 rounded text-[9px] font-mono text-muted-foreground max-w-xs">
-              ⓘ VERIFY ALIBIS: LinkedIn referrals collected under system audit. Double-click or click [Flip Card] to read transcripts.
+              ⓘ VERIFY ALIBIS: LinkedIn referrals collected under system audit. Double-click or
+              click [Flip Card] to read transcripts.
             </div>
           </div>
         </ScrollReveal>
@@ -248,7 +271,13 @@ interface DraggableProps {
   isFlipped: boolean;
   isTop: boolean;
   onDragStart: () => void;
-  onDrag: (cX: number, cY: number, sX: number, sY: number, startOffset: { x: number; y: number }) => void;
+  onDrag: (
+    cX: number,
+    cY: number,
+    sX: number,
+    sY: number,
+    startOffset: { x: number; y: number },
+  ) => void;
   onFlip: (e: React.MouseEvent) => void;
   onFocus: () => void;
 }
@@ -277,7 +306,13 @@ function DraggablePolaroid({
     startOffset.current = { ...offset };
 
     const handleMouseMove = (moveEvent: MouseEvent) => {
-      onDrag(moveEvent.clientX, moveEvent.clientY, dragStart.current.x, dragStart.current.y, startOffset.current);
+      onDrag(
+        moveEvent.clientX,
+        moveEvent.clientY,
+        dragStart.current.x,
+        dragStart.current.y,
+        startOffset.current,
+      );
     };
 
     const handleMouseUp = () => {
@@ -299,7 +334,13 @@ function DraggablePolaroid({
 
     const handleTouchMove = (moveEvent: TouchEvent) => {
       const moveTouch = moveEvent.touches[0];
-      onDrag(moveTouch.clientX, moveTouch.clientY, dragStart.current.x, dragStart.current.y, startOffset.current);
+      onDrag(
+        moveTouch.clientX,
+        moveTouch.clientY,
+        dragStart.current.x,
+        dragStart.current.y,
+        startOffset.current,
+      );
     };
 
     const handleTouchEnd = () => {
@@ -351,7 +392,9 @@ function DraggablePolaroid({
           </div>
 
           <div className="mt-3.5 flex flex-col">
-            <p className="font-display text-base font-extrabold tracking-tight leading-tight">{card.name}</p>
+            <p className="font-display text-base font-extrabold tracking-tight leading-tight">
+              {card.name}
+            </p>
             <p className="font-mono-ui text-[8px] uppercase tracking-[0.2em] text-muted-foreground opacity-80 mt-1 truncate">
               {card.role}
             </p>
@@ -376,7 +419,9 @@ function DraggablePolaroid({
             <span className="font-mono text-[7px] uppercase tracking-[0.25em] text-cyan-600 font-bold">
               ✓ Verified referent
             </span>
-            <span className="font-mono text-[6px] text-muted-foreground">REF: {card.id.toUpperCase()}-2026</span>
+            <span className="font-mono text-[6px] text-muted-foreground">
+              REF: {card.id.toUpperCase()}-2026
+            </span>
           </div>
 
           {/* Handwriting testimonial copy */}

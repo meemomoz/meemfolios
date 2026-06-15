@@ -83,16 +83,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "Meemansa Malav — The Un-Resume" },
       {
         property: "og:description",
-        content:
-          "A cinematic portfolio of campaigns, conversations, and collaborative wins.",
+        content: "A cinematic portfolio of campaigns, conversations, and collaborative wins.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Meemansa Malav — The Un-Resume" },
       {
         name: "twitter:description",
-        content:
-          "A cinematic portfolio of campaigns, conversations, and collaborative wins.",
+        content: "A cinematic portfolio of campaigns, conversations, and collaborative wins.",
       },
     ],
     links: [

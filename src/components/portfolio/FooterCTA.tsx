@@ -22,8 +22,8 @@ export function FooterCTA() {
             <span className="text-signal italic">this far.</span>
           </h2>
           <p className="text-foreground/70 mx-auto mt-8 max-w-xl text-lg">
-            If my experiences, or my way of thinking align with what you're
-            looking for, I'd love to connect.
+            If my experiences, or my way of thinking align with what you're looking for, I'd love to
+            connect.
           </p>
           <a
             href="mailto:meemansamalav@gmail.com"

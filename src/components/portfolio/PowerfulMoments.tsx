@@ -29,8 +29,7 @@ const moments = [
   {
     src: volunteerAsset.url,
     title: "Community Outreach",
-    caption:
-      "Volunteered in menstrual hygiene outreach programs for underserved communities.",
+    caption: "Volunteered in menstrual hygiene outreach programs for underserved communities.",
   },
 ];
 
@@ -77,7 +76,7 @@ export function PowerfulMoments() {
                       "linear-gradient(to top, rgba(10,10,10,0.92) 8%, rgba(10,10,10,0.15) 60%, transparent 90%)",
                   }}
                 />
-                
+
                 {/* Visual label marker */}
                 <div className="absolute left-4 top-4 flex items-center gap-1.5">
                   <span className="font-mono-ui bg-signal/85 text-primary-foreground px-2 py-0.5 text-[8px] uppercase tracking-[0.2em] rounded">

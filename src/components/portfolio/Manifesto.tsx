@@ -6,11 +6,9 @@ export function Manifesto() {
           00 — The Unfiltered Version
         </p>
         <p className="font-display text-[clamp(1.75rem,3.4vw,3rem)] font-light leading-[1.15] tracking-tight">
-          A psychology brain in a marketing world. Someone who loves learning
-          new things, tears up around animals, and is{" "}
-          <span className="text-signal italic">always quietly planning</span>{" "}
-          the next trip. Take a look around — I hope you find someone worth
-          hiring.
+          A psychology brain in a marketing world. Someone who loves learning new things, tears up
+          around animals, and is <span className="text-signal italic">always quietly planning</span>{" "}
+          the next trip. Take a look around — I hope you find someone worth hiring.
         </p>
       </div>
     </section>

@@ -36,17 +36,31 @@ const reels = [
 
 export function PersonalAchievements() {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+  const [containerWidth, setContainerWidth] = useState(1000);
+
   // Infinite scroll offset
   const [scrollPos, setScrollPos] = useState(0);
   const [targetScrollPos, setTargetScrollPos] = useState(0);
-  
+
   const isDragging = useRef(false);
+  const [dragging, setDragging] = useState(false);
   const startX = useRef(0);
   const startScroll = useRef(0);
   const velocity = useRef(0);
   const lastTime = useRef(0);
   const lastX = useRef(0);
+
+  // Sync container width into state to avoid accessing ref during render
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
+    };
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
 
   // Smooth easing loop
   useEffect(() => {
@@ -67,7 +81,7 @@ export function PersonalAchievements() {
         // When dragging, follow target immediately
         setScrollPos((prev) => prev + (targetScrollPos - prev) * 0.25);
       }
-      
+
       raf = requestAnimationFrame(tick);
     };
     tick();
@@ -77,6 +91,7 @@ export function PersonalAchievements() {
   // Touch and Mouse handlers
   const handleDragStart = (clientX: number) => {
     isDragging.current = true;
+    setDragging(true);
     startX.current = clientX;
     startScroll.current = targetScrollPos;
     velocity.current = 0;
@@ -87,7 +102,7 @@ export function PersonalAchievements() {
   const handleDragMove = (clientX: number) => {
     if (!isDragging.current) return;
     const deltaX = clientX - startX.current;
-    
+
     // Scale drag delta for visual mapping
     setTargetScrollPos(startScroll.current - deltaX * 1.2);
 
@@ -96,7 +111,7 @@ export function PersonalAchievements() {
     const dt = now - lastTime.current;
     if (dt > 0) {
       const dx = clientX - lastX.current;
-      velocity.current = dx / dt * 15; // drag velocity factor
+      velocity.current = (dx / dt) * 15; // drag velocity factor
     }
     lastTime.current = now;
     lastX.current = clientX;
@@ -104,6 +119,7 @@ export function PersonalAchievements() {
 
   const handleDragEnd = () => {
     isDragging.current = false;
+    setDragging(false);
   };
 
   // Trackpad / wheel scroll support
@@ -147,20 +163,20 @@ export function PersonalAchievements() {
           className="relative flex h-[480px] w-full items-center justify-center perspective-1000 select-none cursor-grab active:cursor-grabbing overflow-hidden"
           style={{
             maskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
-            WebkitMaskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
           }}
         >
           <div className="absolute flex w-full justify-center preserve-3d pointer-events-none">
             {reels.map((r, i) => {
               // Mathematical layout along infinite circular cylinder
               let relativeX = (i * cardSpacing - scrollPos) % totalWidth;
-              
+
               // Wrap coordinates back/forth
               if (relativeX > totalWidth / 2) relativeX -= totalWidth;
               if (relativeX < -totalWidth / 2) relativeX += totalWidth;
 
               // Normalized value representing horizontal position relative to track center (-1 to 1)
-              const containerWidth = containerRef.current?.offsetWidth || 1000;
               const normX = relativeX / (containerWidth / 2.5);
 
               // 3D cylindrical mapping variables
@@ -178,7 +194,9 @@ export function PersonalAchievements() {
                     transform: `translateX(${relativeX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
                     opacity: opacity,
                     zIndex: Math.round(100 - Math.abs(normX) * 100),
-                    transition: isDragging.current ? "none" : "transform 0.1s ease-out, opacity 0.1s ease-out",
+                    transition: dragging
+                      ? "none"
+                      : "transform 0.1s ease-out, opacity 0.1s ease-out",
                     willChange: "transform, opacity",
                   }}
                 >
@@ -201,13 +219,16 @@ export function PersonalAchievements() {
 }
 
 // Inner card component that handles autoplay and cursor states
-function CarouselCard({ reel, index }: { reel: typeof reels[0]; index: number }) {
+function CarouselCard({ reel, index }: { reel: (typeof reels)[0]; index: number }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handleMouseEnter = () => {
     if (videoRef.current) {
-      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+      videoRef.current
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch(() => {});
     }
   };
 
@@ -254,7 +275,9 @@ function CarouselCard({ reel, index }: { reel: typeof reels[0]; index: number })
 
         {/* Video state visual cue indicator */}
         <div className="absolute left-4 bottom-4 flex items-center gap-2">
-          <span className={`inline-block h-2 w-2 rounded-full ${isPlaying ? "bg-signal animate-pulse" : "bg-white/30"}`} />
+          <span
+            className={`inline-block h-2 w-2 rounded-full ${isPlaying ? "bg-signal animate-pulse" : "bg-white/30"}`}
+          />
           <span className="font-mono-ui text-[8px] uppercase tracking-[0.2em] text-foreground/80">
             {isPlaying ? "Playing preview" : "Hover to play"}
           </span>

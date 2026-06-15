@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
 import { Navbar } from "@/components/portfolio/Navbar";
 import { Hero } from "@/components/portfolio/Hero";
 import { Manifesto } from "@/components/portfolio/Manifesto";
@@ -26,8 +25,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Meemansa Malav — The Un-Resume" },
       {
         property: "og:description",
-        content:
-          "A cinematic portfolio of campaigns, conversations, and collaborative wins.",
+        content: "A cinematic portfolio of campaigns, conversations, and collaborative wins.",
       },
     ],
   }),
@@ -35,9 +33,6 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
       {/* Custom custom-cursor element */}
@@ -51,8 +46,8 @@ function Index() {
             "radial-gradient(ellipse at 30% 20%, rgba(200,75,49,0.05), transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(227,167,47,0.05), transparent 55%), #FDFBF7",
         }}
       />
-      {mounted && <VortexCanvas />}
-      
+      <VortexCanvas />
+
       <div
         aria-hidden
         className="pointer-events-none fixed inset-0 -z-[5]"
@@ -67,12 +62,13 @@ function Index() {
         aria-hidden
         className="pointer-events-none fixed inset-0 z-50 opacity-20 mix-blend-multiply"
         style={{
-          backgroundImage: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.25'/></svg>\")"
+          backgroundImage:
+            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.25'/></svg>\")",
         }}
       />
 
       <Navbar />
-      
+
       <ScrollReveal animation="fade-in" duration={1000}>
         <Hero />
       </ScrollReveal>
@@ -105,5 +101,3 @@ function Index() {
     </main>
   );
 }
-
-

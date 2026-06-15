@@ -168,7 +168,7 @@ export function VortexCanvas() {
     // Scene & Camera for Background Quad
     const bgScene = new THREE.Scene();
     const bgCamera = new THREE.Camera();
-    
+
     const bgUniforms = {
       uTime: { value: 0 },
       uMouse: { value: new THREE.Vector2(0.5, 0.5) },
@@ -193,7 +193,7 @@ export function VortexCanvas() {
       60,
       window.innerWidth / window.innerHeight,
       0.1,
-      100
+      100,
     );
     camera3d.position.set(0, 0, 15);
 
@@ -273,14 +273,14 @@ export function VortexCanvas() {
     const start = performance.now();
     const tick = () => {
       const t = (performance.now() - start) / 1000;
-      
+
       // Update variables
       bgUniforms.uTime.value = reduced ? 0 : t;
       bgUniforms.uMouse.value.lerp(targetMouse, reduced ? 1 : 0.06);
 
       particleUniforms.uTime.value = reduced ? 0 : t;
       particleUniforms.uMouse.value.copy(targetMouse);
-      
+
       currentScroll = THREE.MathUtils.lerp(currentScroll, targetScroll, 0.08);
       particleUniforms.uScroll.value = currentScroll;
 
@@ -288,8 +288,16 @@ export function VortexCanvas() {
 
       // Camera drift on cursor
       if (!reduced) {
-        camera3d.position.x = THREE.MathUtils.lerp(camera3d.position.x, (targetMouse.x - 0.5) * 3, 0.05);
-        camera3d.position.y = THREE.MathUtils.lerp(camera3d.position.y, (targetMouse.y - 0.5) * 3, 0.05);
+        camera3d.position.x = THREE.MathUtils.lerp(
+          camera3d.position.x,
+          (targetMouse.x - 0.5) * 3,
+          0.05,
+        );
+        camera3d.position.y = THREE.MathUtils.lerp(
+          camera3d.position.y,
+          (targetMouse.y - 0.5) * 3,
+          0.05,
+        );
         camera3d.lookAt(0, 0, -30);
       }
 
@@ -316,16 +324,5 @@ export function VortexCanvas() {
     };
   }, []);
 
-  return (
-    <canvas
-      ref={ref}
-      aria-hidden="true"
-      className="fixed inset-0 -z-10 h-screen w-screen"
-    />
-  );
-}
-
-export function setVortexAccent(hex: string) {
-  if (typeof window === "undefined") return;
-  window.dispatchEvent(new CustomEvent("vortex:accent", { detail: hex }));
+  return <canvas ref={ref} aria-hidden="true" className="fixed inset-0 -z-10 h-screen w-screen" />;
 }

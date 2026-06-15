@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
+// Detect touch capability outside the component so it never triggers during render
+const isTouchDevice = typeof window !== "undefined" && window.matchMedia("(hover: none)").matches;
+
 export function CustomCursor() {
-  const [mounted, setMounted] = useState(false);
   const [accent, setAccent] = useState("#00F0FF");
   const [cursorType, setCursorType] = useState<string | null>(null);
 
@@ -13,15 +15,12 @@ export function CustomCursor() {
 
   useEffect(() => {
     // Disable on mobile/touch screens
-    const isTouch = window.matchMedia("(hover: none)").matches;
-    if (isTouch) return;
-
-    setMounted(true);
+    if (isTouchDevice) return;
 
     const onMouseMove = (e: MouseEvent) => {
       mouseRef.current.x = e.clientX;
       mouseRef.current.y = e.clientY;
-      
+
       // Instantly position dot
       if (dotRef.current) {
         dotRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
@@ -89,7 +88,7 @@ export function CustomCursor() {
     };
   }, []);
 
-  if (!mounted) return null;
+  if (isTouchDevice) return null;
 
   const getCursorLabel = () => {
     switch (cursorType) {
